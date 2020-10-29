@@ -70,7 +70,7 @@ public class BlockBreak implements Listener {
 
         money *= bonus;
 
-        Bukkit.getPluginManager().callEvent(new NanoMinesBreakEvent(blockModel, money, bonus, block));
+        Bukkit.getPluginManager().callEvent(new NanoMinesBreakEvent(blockModel, money, bonus, block, numberFormat));
 
         block.setType(Material.AIR);
 

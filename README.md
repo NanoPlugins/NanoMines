@@ -52,5 +52,6 @@ public void onCall(NanoMinesBreakEvent event) {
   System.out.println("Bonus: " + event.getBonus());
   System.out.println("Money: " + event.getMoney());
   System.out.println("Bloco: " + event.getBlock()); 
+  System.out.println("Money formatado: " + event.getNumberFormat().formatNumber(event.getMoney()));
 }
 ```
