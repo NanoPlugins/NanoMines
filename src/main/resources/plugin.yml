@@ -1,0 +1,6 @@
+name: NanoMinas
+version: 1.0.0
+main: com.nanoplugins.mines.NanoMines
+authors: [NanoPlugins, Morais]
+softdepend:
+  - Vault
