@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
+import java.util.List;
 import java.util.Optional;
 
 public class BlockBreak implements Listener {
@@ -30,6 +31,7 @@ public class BlockBreak implements Listener {
     private final NumberFormat numberFormat;
     private final boolean useFortune, useActionBar, useMessage;
     private final String actionbar, message;
+    private final List<String> worlds;
 
     public BlockBreak(NanoMines plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -40,6 +42,7 @@ public class BlockBreak implements Listener {
         useFortune = plugin.getConfig().getBoolean("settings.fortune");
         useActionBar = plugin.getConfig().getBoolean("settings.actionbar");
         useMessage = plugin.getConfig().getBoolean("settings.message");
+        worlds = plugin.getConfig().getStringList("settings.worlds");
         actionbar = plugin.getConfig().getString("messages.actionbar").replace("&", "§");
         message = plugin.getConfig().getString("messages.message").replace("&", "§");
     }
@@ -47,6 +50,9 @@ public class BlockBreak implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
         Block block = event.getBlock();
+
+        if (!worlds.contains(block.getWorld().getName())) return;
+
         BlockModel blockModel = dao.get(new BlockType(block.getType(), block.getData()));
         if (blockModel == null) return;
 

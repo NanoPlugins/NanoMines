@@ -1,6 +1,6 @@
-﻿# NanoAutoClicker
+﻿# NanoMines
 
-É um sistema de autoclick para o seu servidor, que tem como função atacar mobs de forma automática.
+É um sistema de mineração para o seu servidor, que tem como função dar money quando quebra um bloco.
 
 ## Configuração
 
