@@ -12,8 +12,6 @@ settings:
   fortune: true #Uso de fortuna (valor * fortuna)
   actionbar: true #Uso de actionbar
   message: false #Uso de mensagem no chat
-  worlds: #Mundos onde funciona
-    - "Minas"
 
 #Mensagens
 messages:
