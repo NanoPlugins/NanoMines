@@ -11,6 +11,7 @@ public class NanoMinesBreakEvent extends Event {
     private final BlockModel blockModel;
     private final double money, bonus;
     private final Block block;
+    private final int stockMarket;
     private final NumberFormat numberFormat;
 
     public BlockModel getBlockModel() {
@@ -29,15 +30,20 @@ public class NanoMinesBreakEvent extends Event {
         return money;
     }
 
+    public int getStockMarket() {
+        return stockMarket;
+    }
+
     public NumberFormat getNumberFormat() {
         return numberFormat;
     }
 
-    public NanoMinesBreakEvent(BlockModel blockModel, double money, double bonus, Block block, NumberFormat numberFormat) {
+    public NanoMinesBreakEvent(BlockModel blockModel, double money, double bonus, Block block, int stockMarket, NumberFormat numberFormat) {
         this.blockModel = blockModel;
         this.money = money;
         this.bonus = bonus;
         this.block = block;
+        this.stockMarket = stockMarket;
         this.numberFormat = numberFormat;
     }
 

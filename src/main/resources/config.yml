@@ -2,6 +2,7 @@
 
 #Definições
 settings:
+  nano-stock-market: false #Caso use o plugin de bolsa(NanoBolsa)
   fortune: true #Uso de fortuna (valor * fortuna)
   actionbar: true #Uso de actionbar
   message: false #Uso de mensagem no chat
@@ -10,8 +11,10 @@ settings:
 
 #Mensagens
 messages:
-  actionbar: "&aMinerou um %block% &ae ganhou &7%money% &acoins! &d(%bonus%% | %fortune%)" #Actionbar ao minerar
-  message: "&aMinerou um %block% &ae ganhou &f%money% &acoins! &d(%bonus%% | %fortune%)" #Mensagem no chat ao minerar
+  #Actionbar ao minerar (Placeholders: %block% & %money% & %bonus% & %fortune% & %stockMarket%)
+  actionbar: "&aMinerou um %block% &ae ganhou &7%money% &acoins! &d(%bonus%% | %fortune%)"
+  #Mensagem no chat ao minerar (Placeholders: %block% & %money% & %bonus% & %fortune% & %stockMarket%)
+  message: "&aMinerou um %block% &ae ganhou &f%money% &acoins! &d(%bonus%% | %fortune%)"
 
 #Blocos
 blocks:

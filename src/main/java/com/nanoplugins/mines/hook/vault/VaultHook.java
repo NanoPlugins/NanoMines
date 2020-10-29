@@ -1,4 +1,4 @@
-package com.nanoplugins.mines.hook;
+package com.nanoplugins.mines.hook.vault;
 
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;

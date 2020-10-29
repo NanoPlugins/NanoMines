@@ -3,11 +3,12 @@ package com.nanoplugins.mines.listener;
 import com.nanoplugins.mines.NanoMines;
 import com.nanoplugins.mines.dao.BlockDao;
 import com.nanoplugins.mines.event.NanoMinesBreakEvent;
-import com.nanoplugins.mines.hook.VaultHook;
+import com.nanoplugins.mines.hook.vault.VaultHook;
 import com.nanoplugins.mines.manager.BonusManager;
 import com.nanoplugins.mines.model.BlockModel;
 import com.nanoplugins.mines.model.BlockType;
 import com.nanoplugins.mines.util.NumberFormat;
+import com.nanoplugins.stockmarket.NanoStockMarketAPI;
 import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
@@ -29,9 +30,10 @@ public class BlockBreak implements Listener {
     private final VaultHook hook;
     private final BonusManager manager;
     private final NumberFormat numberFormat;
-    private final boolean useFortune, useActionBar, useMessage;
+    private final boolean useFortune, useActionBar, useMessage, useStockMarket;
     private final String actionbar, message;
     private final List<String> worlds;
+    private NanoStockMarketAPI nanoStockMarketAPI;
 
     public BlockBreak(NanoMines plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -39,12 +41,14 @@ public class BlockBreak implements Listener {
         this.manager = new BonusManager(plugin.getConfig());
         this.hook = new VaultHook();
         this.numberFormat = new NumberFormat();
+        useStockMarket = plugin.getConfig().getBoolean("settings.nano-stock-market");
         useFortune = plugin.getConfig().getBoolean("settings.fortune");
         useActionBar = plugin.getConfig().getBoolean("settings.actionbar");
         useMessage = plugin.getConfig().getBoolean("settings.message");
         worlds = plugin.getConfig().getStringList("settings.worlds");
         actionbar = plugin.getConfig().getString("messages.actionbar").replace("&", "§");
         message = plugin.getConfig().getString("messages.message").replace("&", "§");
+        if (useStockMarket) nanoStockMarketAPI = NanoStockMarketAPI.get();
     }
 
     @EventHandler
@@ -70,7 +74,11 @@ public class BlockBreak implements Listener {
 
         money *= bonus;
 
-        Bukkit.getPluginManager().callEvent(new NanoMinesBreakEvent(blockModel, money, bonus, block, numberFormat));
+        int stockMarket = useStockMarket ? nanoStockMarketAPI.getStockMarket() : 1;
+
+        money *= stockMarket;
+
+        Bukkit.getPluginManager().callEvent(new NanoMinesBreakEvent(blockModel, money, bonus, block, useStockMarket ? nanoStockMarketAPI.getStockMarket() : 1, numberFormat));
 
         block.setType(Material.AIR);
 
@@ -78,11 +86,13 @@ public class BlockBreak implements Listener {
 
         if (useActionBar)
             sendMessage(player, actionbar
+                    .replace("%stockMarket%", Integer.toString(stockMarket))
                     .replace("%block%", blockModel.getDisplayName())
                     .replace("%fortune%", Integer.toString(fortune))
                     .replace("%bonus%", Double.toString(bonus)).replace("%money%", numberFormat.formatNumber(money)));
         if (useMessage)
             player.sendMessage(message
+                    .replace("%stockMarket%", Integer.toString(stockMarket))
                     .replace("%block%", blockModel.getDisplayName())
                     .replace("%fortune%", Integer.toString(fortune))
                     .replace("%bonus%", Double.toString(bonus)).replace("%money%", numberFormat.formatNumber(money)));

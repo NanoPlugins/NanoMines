@@ -14,6 +14,10 @@ public class NanoMines extends JavaPlugin {
         saveDefaultConfig();
         dao = new BlockDao();
         new BlockProcess(dao, getConfig());
+        if (getConfig().getBoolean("settings.nano-stock-market") && getServer().getPluginManager().getPlugin("NanoBolsa") == null) {
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         new BlockBreak(this);
     }
 

@@ -17,6 +17,7 @@ tasks.withType(JavaCompile) {
 }
 
 dependencies {
+    compile files('libs/NanoStockMarket-1.0.0.jar')
     compileOnly 'com.morais:spigot:1.8.8'
     compileOnly 'com.morais:vault:1.8.8'
     compileOnly 'org.projectlombok:lombok:1.18.12'
